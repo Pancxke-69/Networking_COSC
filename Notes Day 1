@@ -1,0 +1,306 @@
+FG - https://net.cybbh.io/public/networking/latest/index.html
+VTA Logon - networking-ctfd-1.server.vta:8000 (http://10.50.20.180:8000/)
+Miro - https://miro.com/app/board/o9J_klSqCSY=/?share_link_id=16133753693
+IP - ssh student@10.50.37.95 -X
+
+
+Protocol Data Unit (PDU)
+  Session-Application -> Data
+  Transport -> Segment/Datagram
+  Network -> Packet
+  Data Link -> Frame
+  Physical -> Bit
+
+
+Internet Standards (Organizations)
+  IETF = RFC
+  IANA - Internet Numbers
+    # The ones that control who owns a set of IP's
+  IEEE - LAN/WAN electrical standards
+    # Responsible for maintaining standards for protocols
+
+
+============================= Layer 1 (Physical) ==================================
+  # There are bits at this level
+  # binary, decimal, hex, base64
+  word = 32 bits
+  half word = 16 bits
+  byte = 8
+  nibbles = 4
+Topologies
+> Bus
+  # Half-Duplex
+  # Straight line
+> Star
+  # Switch is at the center of the star
+> Ring
+  # Key that is shared with the devices in the ring
+> Mesh
+  # Some are connected to each other, or all are connected to each other
+> Wireless
+  # Wireless devices are connected to a modem
+> Hierarchial 
+  # More aligned with an enterprise level company topology
+  # Firewalls, Different layers
+Devices
+> Hubs
+  # Everyone gets everything (Doesnt check frames that are sent)
+  # it broadcasts to all ports (Packet Collision)
+> Repeaters
+  # Like hub, but amplifies signal so its stronger
+> Switches
+> Routers
+  # Based off of IP
+Ethernet Timing (Bit-Time) ???????? <- (Research Later)
+Speed        Bit-Time
+10Mbps       100ns
+100Mbps      10ns
+1 Gps        1ns
+10 Gbps     .1ns
+100 Gbps    .01ns
+
+
+============================= Layer 2 (Data-Link) ========================================
+MAC (Medium Access Control)
+  # Transpose Layer 2 - 3 (Goes UP the OSI Model)
+LLC (Logical Link Control
+  # Transpose to MAC Address (Goes DOWN the OSI Model)
+
+
+Switch Operation
+  # build MAC Address (CAM) Table
+    > Learns by reading source MAC Addresses
+  # Forwarding Frames
+    > Decision based on destination MAC Address
+
+
+> Switching Modes
+  > Cut through
+    # Default Method
+    # Only check Destination MAC
+  > Fragment-Free
+    # Stores first 64 bytes of the frame (Ethernet portion) before forwarding
+  > Store-and-Forward
+    # Information is kept and sent at a later time to the destination
+> Cam Table Overflow Attack  ?????????????/ <- (Research Later)
+  # Send frames with bogus source MAC Address to switch
+  # Cause switch to fill table with bogus addresses
+  # Switch will not be able to learn new (valid) MAC Addresses
+
+
+MAC Addressing
+> Length:  48-bit | 6 byte | 12 Hex
+> Types
+  > Unicast: One to One
+    # 8TH bit is off
+  > Multicast: One to Many
+    # 8TH bit is off
+  > Broadcast: One to All
+    # All bits on
+
+
+Ethernet Header and Frame
+> Mac Header/Trailer: 14 Bytes
+> Data: 46-1500 Bytes
+> EtherType
+  > 0x0800 - IPv4
+  > 0x0806 - ARP
+  > 0x86DD - IPv6
+  > 0x8100 - VLAN !!!!!!!!!!!
+
+
+VLAN
+# Splitting up a switch into virtual ports
+> Trunk Link
+  # Joining two switches together with VLAN Ports as if they were physically connected with ethernet
+> Types
+  > Default: VLAN 1
+  > Data - User Traffic
+  > Voice - VOIP Traffic
+  > Management - Switch and router managment
+  > Native - Untagged switch and router traffic
+> Headers
+  # Header length is: 32 bits
+  > 802.1Q
+  > 802.1AD
+> VLAN Hopping Attack
+  > Switch Spoofing (DTP)
+  > Single Tagging
+  > Double Tagging
+
+
+ARP
+> Types
+  > ARP (OP 1 and 2)
+    # Requests info. Example: knows ip asks for mac (Location)
+  > RARP (OP 3 and 4)
+    # The client requesting an IP Address from the server's gateway
+  > Proxy ARP (OP 2)
+    # The host answering the ARP Request from whatever asked where they were
+  > Gratuitous ARP (OP 2)
+    # The host broadcasts their location without the request
+> ARP Cache
+    # A tables that has translations in it
+    # Collection of Address Resolution Protocol Entries
+
+
+Man-In-The-Middle With ARP
+  # Causes victim machines to populate their ARP Cache with the MAC Address of the attacker's machine instead of the local router's MAC Address
+
+
+VLAN Trunking Protocol (VTP)
+  # Dynamically add/remove/modify VLANs
+> Cisco Proprietary
+> Modes
+  > Server
+  > Client
+  > Transparent
+> Vulnerablities
+  > Spoofing Attacks
+
+Dynamic Trunking Protocol (DTP)
+# Used to dynamically create trunk links
+> Vulnerabilities
+  > Can send crafted messages to form a VLAN trunk link
+  > On By Default
+  > Recomment to:
+    > Disable and manually access trunk link
+
+CDP (Cisco Discovery Protocol)
+  # Network Discovery tool or admins that identifies the neighbors
+FDP (Foundry Discovery Protocol)
+  # Proprietary data link layer protocol
+LLDP (Link Layer Discovery Protocol)
+  # Neighbors are able to find each other on the local network (principally wired Ethernet)
+
+
+Spanning Tree Protocol (STP)
+  # Layer 2 network protocol used to prevent looping within a network topology 
+  # Always forward traffic in specific patterns
+  # packets stuck in a loop is a broadcast storm
+	  > # STP is a method to prevent this as it disables temporarily any link that is not the best route out. Redundancy can still be in place as a backup
+> Types
+  > 802.1D STP
+  > Per VLAN Spanning Tree + (PVST+)
+  > 802.1w - Rapid Spanning Tree Protocol (RSTP)
+  > Rapid per VLAN Spanning Tree + (RPVST+)
+  > 802.1s (Multiple Spanning Tree)
+> route bridge selection route out of the network
+> spanning tree attack
+	# can craft a bdu to deny service with a false/erroneous/spoofed bridge
+> Port Security
+	> Restrict – block without shutting down
+	> protect- lets through but logs the mac
+	> shutdown – is shutdown
+> Vulnerabilities
+  > Dependent on MAC Addresses
+  > MAC Spoofing
+> Mitigiation techniques Layer 1
+  > Shutdown unused ports
+  > Enable Port Security
+  > IP Source Guard
+  > Manually assign STP Root
+  > BPDU Guard
+  > DHCP Snooping
+> Mitigation Techniques Layer 2
+  > 802.1x
+  > Dynamic ARP inspection (DAI)
+  > Static CAM Entries
+  > Static ARP Entries
+
+
+============================== Layer 3 (Network) ============================
+IPv4 (0x0800)
+> Classful subnetting
+  > Class A (0-127)
+  > Class B (128-191)
+  > Class C (192-223)
+  > Class D (224-239)
+  > Class E (240-255)
+> Classless subnetting (CIDR)
+> NAT
+> TTL
+  > Linux (64)
+  > Windows (128)
+  > Network Devices
+> Types
+  > Unicast
+  > Multicast
+  > Broadcast
+> Scopes
+  > Public
+  > Private (RFC 1918)
+  > Loopback (127.0.0.1)
+  > Link-Local (APIPA)
+  > Multicast (class D)
+> Fragmentation
+  # Breaking up packets from higher MTU to lower MTU (Maximum Transmission Unit) network
+  # Performed by routers
+  # MF Flag is on from 1st until 2nd to last
+  # offset is on from 2nd until the last
+  # offset = (MTU - (IHL x 4)) / 8
+> Auto Config
+  > APIPA
+  > DHCP
+    > DORA
+> Vulnerability 
+  > Rogue DHCP
+  > Evil Twin
+  > DHCP Starvation 
+    # Denial of service
+IPv6 (Standardized 2017)
+> Fragmentation
+  > Does not support fragmentation within its header
+  > Routers do not fragment IPv6 packets !!!!!!!!!!!!!1
+  > Source adjusts MTU to avoid Fragmentation
+  > Source can use IPv6 fragmentation extension header
+> Addressing
+  > 128 bit addressing
+> Subnetting
+  > Organizations assigned a 48-bit Prefix by IANA
+> Types
+  > Unicast
+  > Multicast
+  > Anycast
+ICMPv4
+  # IPv4 Protocol
+> OS Fingerprinting
+  > Linux
+    > Default Size: 64 Bytes
+    > Payload Message: nfo/./.345/.,0u98fgoij
+  > Windows:
+    > Default Size: 40 Bytes
+    > Payload Message: abcdefghijklmnopqrstuvwxyz
+> Traceroute
+  > Identifies Hops between the source and the destination
+  > Uses incrimenting ttls
+  > Uses ICMP (windows default), UDP (linux default), TCP
+> Attacks
+  > Firewalking (Traceroute)
+  > Oversized ICMP Messages
+  > ICMP Redirects
+  > SMURF Attack
+  > Map Network w/ IP unreachables
+  > ICMP Covert Channels
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
