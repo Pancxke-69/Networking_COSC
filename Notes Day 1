@@ -15,9 +15,9 @@ Protocol Data Unit (PDU)
 Internet Standards (Organizations)
   IETF = RFC
   IANA - Internet Numbers
-    # The ones that control who owns a set of IP's
+    > # The ones that control who owns a set of IP's
   IEEE - LAN/WAN electrical standards
-    # Responsible for maintaining standards for protocols
+    > # Responsible for maintaining standards for protocols
 
 
 ============================= Layer 1 (Physical) ==================================
@@ -29,28 +29,28 @@ Internet Standards (Organizations)
   nibbles = 4
 Topologies
 > Bus
-  # Half-Duplex
-  # Straight line
+  > # Half-Duplex
+  > # Straight line
 > Star
-  # Switch is at the center of the star
+  > # Switch is at the center of the star
 > Ring
-  # Key that is shared with the devices in the ring
+  > # Key that is shared with the devices in the ring
 > Mesh
-  # Some are connected to each other, or all are connected to each other
+  > # Some are connected to each other, or all are connected to each other
 > Wireless
-  # Wireless devices are connected to a modem
+  > # Wireless devices are connected to a modem
 > Hierarchial 
-  # More aligned with an enterprise level company topology
-  # Firewalls, Different layers
+  > # More aligned with an enterprise level company topology
+  > # Firewalls, Different layers
 Devices
 > Hubs
-  # Everyone gets everything (Doesnt check frames that are sent)
-  # it broadcasts to all ports (Packet Collision)
+  > # Everyone gets everything (Doesnt check frames that are sent)
+  > # it broadcasts to all ports (Packet Collision)
 > Repeaters
-  # Like hub, but amplifies signal so its stronger
+  > # Like hub, but amplifies signal so its stronger
 > Switches
 > Routers
-  # Based off of IP
+  > # Based off of IP
 Ethernet Timing (Bit-Time) ???????? <- (Research Later)
 Speed        Bit-Time
 10Mbps       100ns
@@ -62,41 +62,41 @@ Speed        Bit-Time
 
 ============================= Layer 2 (Data-Link) ========================================
 MAC (Medium Access Control)
-  # Transpose Layer 2 - 3 (Goes UP the OSI Model)
+  > # Transpose Layer 2 - 3 (Goes UP the OSI Model)
 LLC (Logical Link Control
-  # Transpose to MAC Address (Goes DOWN the OSI Model)
+  > # Transpose to MAC Address (Goes DOWN the OSI Model)
 
 
 Switch Operation
   # build MAC Address (CAM) Table
-    > Learns by reading source MAC Addresses
+    > # Learns by reading source MAC Addresses
   # Forwarding Frames
-    > Decision based on destination MAC Address
+    > # Decision based on destination MAC Address
 
 
 > Switching Modes
   > Cut through
-    # Default Method
-    # Only check Destination MAC
+    > # Default Method
+    > # Only check Destination MAC
   > Fragment-Free
-    # Stores first 64 bytes of the frame (Ethernet portion) before forwarding
+    > # Stores first 64 bytes of the frame (Ethernet portion) before forwarding
   > Store-and-Forward
-    # Information is kept and sent at a later time to the destination
+    > # Information is kept and sent at a later time to the destination
 > Cam Table Overflow Attack  ?????????????/ <- (Research Later)
-  # Send frames with bogus source MAC Address to switch
-  # Cause switch to fill table with bogus addresses
-  # Switch will not be able to learn new (valid) MAC Addresses
+  > # Send frames with bogus source MAC Address to switch
+  > # Cause switch to fill table with bogus addresses
+  > # Switch will not be able to learn new (valid) MAC Addresses
 
 
 MAC Addressing
 > Length:  48-bit | 6 byte | 12 Hex
 > Types
   > Unicast: One to One
-    # 8TH bit is off
+    > # 8TH bit is off
   > Multicast: One to Many
-    # 8TH bit is off
+    > # 8TH bit is off
   > Broadcast: One to All
-    # All bits on
+    > # All bits on
 
 
 Ethernet Header and Frame
@@ -112,44 +112,44 @@ Ethernet Header and Frame
 VLAN
 # Splitting up a switch into virtual ports
 > Trunk Link
-  # Joining two switches together with VLAN Ports as if they were physically connected with ethernet
+  > # Joining two switches together with VLAN Ports as if they were physically connected with ethernet
 > Types
-  > Default: VLAN 1
-  > Data - User Traffic
-  > Voice - VOIP Traffic
-  > Management - Switch and router managment
-  > Native - Untagged switch and router traffic
+  > # Default: VLAN 1
+  > # Data - User Traffic
+  > # Voice - VOIP Traffic
+  > # Management - Switch and router managment
+  > # Native - Untagged switch and router traffic
 > Headers
-  # Header length is: 32 bits
-  > 802.1Q
-  > 802.1AD
+  > # Header length is: 32 bits
+  > # 802.1Q
+  > # 802.1AD
 > VLAN Hopping Attack
-  > Switch Spoofing (DTP)
-  > Single Tagging
-  > Double Tagging
+  > # Switch Spoofing (DTP)
+  > # Single Tagging
+  > # Double Tagging
 
 
 ARP
 > Types
   > ARP (OP 1 and 2)
-    # Requests info. Example: knows ip asks for mac (Location)
+    > # Requests info. Example: knows ip asks for mac (Location)
   > RARP (OP 3 and 4)
-    # The client requesting an IP Address from the server's gateway
+    > # The client requesting an IP Address from the server's gateway
   > Proxy ARP (OP 2)
-    # The host answering the ARP Request from whatever asked where they were
+    > # The host answering the ARP Request from whatever asked where they were
   > Gratuitous ARP (OP 2)
-    # The host broadcasts their location without the request
+    > # The host broadcasts their location without the request
 > ARP Cache
-    # A tables that has translations in it
-    # Collection of Address Resolution Protocol Entries
+    > # A tables that has translations in it
+    > # Collection of Address Resolution Protocol Entries
 
 
 Man-In-The-Middle With ARP
-  # Causes victim machines to populate their ARP Cache with the MAC Address of the attacker's machine instead of the local router's MAC Address
+  > # Causes victim machines to populate their ARP Cache with the MAC Address of the attacker's machine instead of the local router's MAC Address
 
 
 VLAN Trunking Protocol (VTP)
-  # Dynamically add/remove/modify VLANs
+  > # Dynamically add/remove/modify VLANs
 > Cisco Proprietary
 > Modes
   > Server
@@ -159,12 +159,12 @@ VLAN Trunking Protocol (VTP)
   > Spoofing Attacks
 
 Dynamic Trunking Protocol (DTP)
-# Used to dynamically create trunk links
+> # Used to dynamically create trunk links
 > Vulnerabilities
-  > Can send crafted messages to form a VLAN trunk link
-  > On By Default
-  > Recomment to:
-    > Disable and manually access trunk link
+  > # Can send crafted messages to form a VLAN trunk link
+  > # On By Default
+  > # Recomment to:
+    > # Disable and manually access trunk link
 
 CDP (Cisco Discovery Protocol)
   # Network Discovery tool or admins that identifies the neighbors
@@ -180,33 +180,33 @@ Spanning Tree Protocol (STP)
   # packets stuck in a loop is a broadcast storm
 	  > # STP is a method to prevent this as it disables temporarily any link that is not the best route out. Redundancy can still be in place as a backup
 > Types
-  > 802.1D STP
-  > Per VLAN Spanning Tree + (PVST+)
-  > 802.1w - Rapid Spanning Tree Protocol (RSTP)
-  > Rapid per VLAN Spanning Tree + (RPVST+)
-  > 802.1s (Multiple Spanning Tree)
+  > # 802.1D STP
+  > # Per VLAN Spanning Tree + (PVST+)
+  > # 802.1w - Rapid Spanning Tree Protocol (RSTP)
+  > # Rapid per VLAN Spanning Tree + (RPVST+)
+  > # 802.1s (Multiple Spanning Tree)
 > route bridge selection route out of the network
 > spanning tree attack
 	# can craft a bdu to deny service with a false/erroneous/spoofed bridge
 > Port Security
-	> Restrict – block without shutting down
-	> protect- lets through but logs the mac
-	> shutdown – is shutdown
+	> # Restrict – block without shutting down
+	> # protect- lets through but logs the mac
+	> # shutdown – is shutdown
 > Vulnerabilities
-  > Dependent on MAC Addresses
-  > MAC Spoofing
+  > # Dependent on MAC Addresses
+  > # MAC Spoofing
 > Mitigiation techniques Layer 1
-  > Shutdown unused ports
-  > Enable Port Security
-  > IP Source Guard
-  > Manually assign STP Root
-  > BPDU Guard
-  > DHCP Snooping
+  > # Shutdown unused ports
+  > # Enable Port Security
+  > # IP Source Guard
+  > # Manually assign STP Root
+  > # BPDU Guard
+  > # DHCP Snooping
 > Mitigation Techniques Layer 2
-  > 802.1x
-  > Dynamic ARP inspection (DAI)
-  > Static CAM Entries
-  > Static ARP Entries
+  > # 802.1x
+  > # Dynamic ARP inspection (DAI)
+  > # Static CAM Entries
+  > # Static ARP Entries
 
 
 ============================== Layer 3 (Network) ============================
@@ -250,14 +250,14 @@ IPv4 (0x0800)
     # Denial of service
 IPv6 (Standardized 2017)
 > Fragmentation
-  > Does not support fragmentation within its header
-  > Routers do not fragment IPv6 packets !!!!!!!!!!!!!1
-  > Source adjusts MTU to avoid Fragmentation
-  > Source can use IPv6 fragmentation extension header
+  > # Does not support fragmentation within its header
+  > # Routers do not fragment IPv6 packets !!!!!!!!!!!!!1
+  > # Source adjusts MTU to avoid Fragmentation
+  > # Source can use IPv6 fragmentation extension header
 > Addressing
-  > 128 bit addressing
+  > # 128 bit addressing
 > Subnetting
-  > Organizations assigned a 48-bit Prefix by IANA
+  > # Organizations assigned a 48-bit Prefix by IANA
 > Types
   > Unicast
   > Multicast
@@ -266,15 +266,15 @@ ICMPv4
   # IPv4 Protocol
 > OS Fingerprinting
   > Linux
-    > Default Size: 64 Bytes
-    > Payload Message: nfo/./.345/.,0u98fgoij
+    > # Default Size: 64 Bytes
+    > # Payload Message: nfo/./.345/.,0u98fgoij
   > Windows:
-    > Default Size: 40 Bytes
-    > Payload Message: abcdefghijklmnopqrstuvwxyz
+    > # Default Size: 40 Bytes
+    > # Payload Message: abcdefghijklmnopqrstuvwxyz
 > Traceroute
-  > Identifies Hops between the source and the destination
-  > Uses incrimenting ttls
-  > Uses ICMP (windows default), UDP (linux default), TCP
+  > # Identifies Hops between the source and the destination
+  > # Uses incrimenting ttls
+  > # Uses ICMP (windows default), UDP (linux default), TCP
 > Attacks
   > # Firewalking (Traceroute)
   > # Oversized ICMP Messages
@@ -361,32 +361,185 @@ Registered : 1024-49151
 Dynamic: 49152-65535
 
 
+TCP Flags:
+> CWR - 128
+> ECE - 64
+> URG - 32
+> ACK - 16
+> PSH - 8
+> RST - 4
+> SYN - 2
+> FYN - 1
+
+
+========================== Layer 5 (Session) ==================================
+VPN
+> # Encasulate a private IP through public IPs
+> Types
+  > # Remote Access VPN
+  > # Site-to-Site VPN
+  > # Client-to-Site VPN
+
+
+L2TCP
+> # Tunneling Protocol Cisco uses
+
+
+IPSEC
+> # Suite of protocols used to secure IP Communications by providing 3 triad of security at layer 3
+> Transport Mode
+  > # Only encrypts the payload of the original IP packet leaving the original IP header intact
+> Tunnel Mode
+  > # IP gets encapsulated and gets a new ip packet by adding an additional ip header
+  > # Creates a secure VPN
+
+
+Proxy
+> # Functions as a messenger (An intermediary)
+> # EXAMPLE: We want to give Bob a secret santa gift (He wont know it was us who have it to him), instead we use a messenger to give the present to Bob.
 
 
 
+Socks
+> # TCP ONLY!
+> # Forwards TCP Traffic (Proxychains)
 
 
+Netbios (Examine Network Basic Input Output System)
+> # Name Resolution
+> # TCP 139, UDP 137/138
 
 
+SMB
+> # TCP 139/445 and DUP 137/138
+> # Acilitate the sharing of files, printers, serial ports, and various communications among network nodes
 
 
+RPC (Examine Remote Procedure Call)
+> # allows a program to request a service from another program located on the same system or on remote computer
 
 
+API
+> # Framework of rules and protocols for software components to interact
+> # Methods, parameters, and data formats for requests and responses
 
 
+======================= Layer 6 (Presentation) =====================
+Responsibilities
+> Translation
+> Formating
+> Encoding
+> Encryption (Symmetric and asymmetric)
+> Compression
 
 
+======================== Layer 5 (Application) ===============================
+Telnet
+> Port 23
+> Remote Login
+> Authentication
 
 
+SSH
+> Port 22
+> Remote Login
+> Encrypted
+> Asymmetric or PKI for key exchange
+> User authentication
+> Architecture
+  > # User Key - Aymmetric public key used to identify the user to the server
+  > # Host Key - Asymmetric Public key created to identify a server to a user
+  > # Session Key - Symmetric Key created by the client and the server that protects the communication for a particular session
+> First Connect
+  > # RSA Key is saved to /home/<user>/.ssh/known_hosts file !!! Probably Important !!!
+> Reconnect
+  > # Wont prompt because the host is saved in the known_hosts file
+> # If SSH gives an error that the rsa key is changed use this command:
+  /> ssh-keygen -f "/home/student/.ssh/known_hosts" -R "172.16.82.106"
+> View/change the ssh port, cat the known_hosts file and grep for port to check, and use vi to edit the file and change the port
 
 
+HTTP(S) (TCP 80/443)
+> User Request Methods
+  > # GET / HEAD / POST / PUT
+> User response codes
+  > # 100,200,300,400,500
+> Vulnerabilities
+  > Flooding
+  > Amplicification
+  > Low and slow
+  > Drive-by Downloads
+  > BeEF Framework
 
 
+DNS
+> UDP 53 (Handles Queries/Responses)
+> TCP 53 (Zone Transfer)
+  > # When the server shares the domain information
 
 
+FTP
+> Port 21
+  > # command and control
+> Port 20
+  > # Data
+> Modes
+  > # Active (Initiated on Port 21) <- Default
+  > # Passive (Uses both ports)
 
 
+TFTP (Port 69)
+> # Clear-Text
+> # Reliability provided at the application layer
 
+
+SMTP (Port 25)
+> # Internet standard used for sending electronic mail
+
+
+POP (Port 110)
+> # Used to retrieve electronic mail from a server
+
+
+IMAP (Port 143)
+> # Download electronic mail from a server
+
+
+DHCP (UDP Port 67/68)
+> # Assigns IP Address parameters across an enterprise
+
+
+NTP (UDP Port 123)
+> # Allows for clock sync between computers over packet-switched data networks
+
+
+TACACS (Port 49)
+> # Used for centralized authentication, authorization, and accounting.
+> # Cisco
+
+
+RADIUS (UDP 1645/1646 AND 1812/1813)
+> # Open source networking protocol used for centralized autentication, authorization and accounting
+
+
+SNMP (UDP Port 161/162)
+> # Collects and organizes information about managed devices on IP networks
+
+
+RTP
+> # Streaming in real-time media over IP networks, designed for transmitting audio and video when speed is of essense
+
+
+RDP (Port 3389)
+> # Remote Desktop
+
+
+Kerberos (UDP Port 88)
+> # Network authentication protocol that ensures secure authentication for client-server applications.
+
+
+LDAP (Port 389 and 636)
+> # Accessing and managing distributed directory information services
 
 
 
