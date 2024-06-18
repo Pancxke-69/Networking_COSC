@@ -276,12 +276,120 @@ ICMPv4
   > Uses incrimenting ttls
   > Uses ICMP (windows default), UDP (linux default), TCP
 > Attacks
-  > Firewalking (Traceroute)
-  > Oversized ICMP Messages
-  > ICMP Redirects
-  > SMURF Attack
-  > Map Network w/ IP unreachables
-  > ICMP Covert Channels
+  > # Firewalking (Traceroute)
+  > # Oversized ICMP Messages
+  > # ICMP Redirects
+  > # SMURF Attack
+  > # Map Network w/ IP unreachables
+  > # ICMP Covert Channels
+
+(Classful)
+  > # Do not Carry subnet mask information within the routing updates
+  > # Exchange routing updaates at the regular time intervals
+(Classless)
+  > # Opposite of both
+
+Routing Protocol
+> # Used Between Layer 3 devices to learn and advertise routes and maintain routing tables
+> # Routes a routed protocol for learning and maintaining routing table
+Routed Protocol
+> # Used between Routers to direct use traffic. It is also called network protocols
+> # Routed by routing protocols
+
+
+IGP and EGP
+> IGP (Interior Gateway Protocols)
+  > # Routing protocols that are used within an Autonomous System (AS).
+  > # Referred to as intra-AS routing.
+  > # Organizations and service providers IGPs on their internal networks.
+  > # IGPs include RIP, EIGRP, OSPF, and IS-IS.
+> EGP (Exterior Gateway Protocols)
+  > # Used primarily for routing between autonomous systems.
+  > # Referred to as inter-AS routing.
+  > # Service providers and large companies will interconnect their AS using an EGP.
+  > # The Border Gateway Protocol (BGP) is the only currently viable EGP and is the official routing protocol used by the Internet.
+> OSPF
+> RIPv2
+> EIGRP
+> ISIS
+
+Distance Vector Routing Protocols
+> # They share entire routing tables with their directly connected neighbors and from these shared tables they determine:
+  > Distance
+    > # How far away the destination network is from the outer and is based on a metric such as the hop count, cost, bandwidth, delay
+  > Vector
+    > # Specifies direction to the remote network
+Link State Routing Protocols
+>  Each router receives an LSA (Link State Adverstisement) and begins to build a map of the entire network
+
+
+Routing Protocol Vulnerabilities
+> DDOS
+> Packet Mistreating Attacks (PMA)
+> Routing Table Poisoning (RTP)
+> Hit and Run DDOS (HAR)
+> Persistence Attacks (PA)
+
+
+BGP
+> # Roadmap of the internet
+> # Routes traffic between AS Number
+> # Advertises IP CIDR address blocks
+> # Establishes Peer relationships
+> # Complicated Configuration
+> # Complicated and slow path selection
+> BGP Hijacking
+  > # This works by illegitimate advertising of addresses, and takes over the CIDR address blocks corrupting the internet routing tables by falsifying the advertising addresses
+
+
+Static Routing
+> # Manually Configured routes
+> # They dont advertise over the network
+> # They dont use bandwidth
+
+
+Dynamic Routing
+> # Discover new remote networks
+> # Maintaining current routing information
+> # Choose the best path to remote networks
+> # Recalculate a new path to a remote network should the primary fail
+
+
+=========================== Layer 4 (Transport) ============================
+Well-Know Ports: 0-1023
+Registered : 1024-49151
+Dynamic: 49152-65535
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
