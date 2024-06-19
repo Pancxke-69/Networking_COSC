@@ -1,0 +1,1 @@
+/> iptables -t mangle -A POSTROUTING -o eth0 -j TTL --ttl-set 65
