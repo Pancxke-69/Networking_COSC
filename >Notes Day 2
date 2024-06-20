@@ -164,7 +164,8 @@ BPF [EXAMPLES]
  > # this filters for tcp null scan to the destination ip 10.10.10.10
 /> ip[8]=1&&(ip[9]=0x01||ip[9]=0x11)'
  > # this filters for traceroute being used
-
+/> ether[12:4]&0xffff0fff=0x81000001&&ether[16:4]&0xffff0fff=0x8100000a
+ > # this filters for vlan hopping from vlan 1 to vlan 10 (looks through the vlan tags) [double-tagging]
 
 
 
