@@ -1,1 +1,33 @@
 /> iptables -t mangle -A POSTROUTING -o eth0 -j TTL --ttl-set xx
+  > # This allows you to change TTL with iptables
+
+
+BPF [EXAMPLES]
+/> tcp[0:2]=53||tcp[2:2]=53||udp[0:2]=53||udp[2:2]=53'
+ > # this filters for any packet that uses dns protocol
+/> ip[9]=0x11||ip6[6]=0x11
+ > # this filters for packets that are using udp
+/> ip[4:2]=213
+ > # this filters for packets that have the ip ID of 213
+/> tcp[0:2]>1024||udp[0:2]>1024'
+ > # this filters for packets that have a source port greater than 1024
+/> tcp[13]=0x10
+ > # this filters for SYN-ACK in tcp
+/> tcp[13]=0x04
+ > # this filters for RST in tcp
+/> tcp[2:2]<1024||udp[2:2]<1024
+ > # this filters for well-known ports in tcp and udp
+/> tcp[0:2]=80||tcp[2:2]=80
+ > # this filters for all http traffic
+/> ether[12:2]=0x0806
+ > # this filters for arp
+/> ip[6]&0x80=0x80
+ > # this filters for the reserved bit "EVIL BIT"
+/> tcp[13]&0x20=0&&tcp[18:2]!=0'
+ > # this filters for the URG bit not being set and the URG pointer having a value
+/> tcp[13]=0&&ip[16:4]=0x0a0a0a0a
+ > # this filters for tcp null scan to the destination ip 10.10.10.10
+/> ip[8]=1&&(ip[9]=0x01||ip[9]=0x11)'
+ > # this filters for traceroute being used
+/> ether[12:4]&0xffff0fff=0x81000001&&ether[16:4]&0xffff0fff=0x8100000a
+ > # this filters for vlan hopping from vlan 1 to vlan 10 (looks through the vlan tags) [double-tagging]
