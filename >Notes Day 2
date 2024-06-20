@@ -158,9 +158,12 @@ BPF [EXAMPLES]
  > # this filters for arp
 /> ip[6]&0x80=0x80
  > # this filters for the reserved bit "EVIL BIT"
-
-
-
+/> tcp[13]&0x20=0&&tcp[18:2]!=0'
+ > # this filters for the URG bit not being set and the URG pointer having a value
+/> tcp[13]=0&&ip[16:4]=0x0a0a0a0a
+ > # this filters for tcp null scan to the destination ip 10.10.10.10
+/> ip[8]=1&&(ip[9]=0x01||ip[9]=0x11)'
+ > # this filters for traceroute being used
 
 
 
