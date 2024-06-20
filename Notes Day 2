@@ -1,0 +1,167 @@
+============== Network Traffic Sniffing ================
+ Packet Capture Libraries
+> LibCap
+> WinPcap
+> NPcap
+Tools And Methods
+> Disadvantages
+  > # Can only capture what NIC can see
+  > # Cannot capture local traffic
+  > # Lost packets on busy networks
+  > # Requires elevate permissions
+  > # Can sonsume massive amounts of local storage
+
+
+Packet Sniffers
+> Hardware
+  > # Something that can be plugged in to capture packets (Not Software)
+> Software
+  > # Wireshark
+
+
+Socket Types
+> User Space Sockets
+  > # Stream Socket (Normally used with TCP/SCTP)
+  > # Datagram Socket (Normally used with UDP)
+  [EXAMPLE tcpdump]
+> Kernel Space Sockets
+  > # Raw Socket (receiving of IP packets without automatic protocol-specific transport layer formatting)
+
+
+Types of Sniffing
+> Active
+  > # Actually interacting with the device
+  > # OS Fingerprinting
+  > # Nmap scan
+> Passive
+  > # Listening to all traffic (All look no touch)
+
+
+Interface Naming
+> Traditional
+  > # eth0, eth1
+> Consistent
+  > # en0, en1
+
+
+TCPDUMP Primitives
+> User Friendly cpature expressions
+  > # src or dst
+  > # host, net, port, portrange
+
+
+TCPDUMP Options !!!!!!!!!!
+> -A
+  > # Prints frame payload in ASCII
+> -D
+  > # Print list of network interfaces available on the system
+> -i
+  > # Select a different interface
+> -e
+  > # Prints data-link headers
+> -r 
+  > # Reads from pcap
+> -w
+  > # Writes the capture to an output file
+> -X
+  > # Displays packet data in hex
+> -XX
+  > # Displays everything in hex (Including Layer 2)
+> -vv
+  > # Gives verbose output with detail on the TTL, IPID, ect.
+> -n
+  > # Does not convert protocol and addresses to names
+  [EXAMPLE]
+  /> tcpdump port 80 or 22 -vn
+    > # TCPDUMP for specific protocol traffic
+/> tcpdump <pcap> -XX -vv
+  > # Magic command (Gives everything)
+/> tcpdump <protocol>
+
+Compare Primitives and BPFS
+> Primitives [MORE SIMPLE]
+  > # CMU/Stanford Packet Filter (CSPF) Model commonly called Boolean Expression Tree
+  > # Simple and easy filter expressions
+  > # First user-level packet filter model
+  > # Memory-stack-based filter machine which can create bottlenecks on model CPUs
+  > # can have redundant computations of the same information
+> Berkley Packet Filters (BPF) [MORE COMPLICATED BUT CAN BE MORE SPECIFIC]
+  > # Control Flow Graph (CFG) Model
+  > # Uses a simple (non-shared) buffer model which can make it 1.5 to 20 times faster than CSPF
+  > # Can be more complex to create expressions but offer far more precision
+  > # Faster because you can set it to look at specific things and doesnt show you bloated information (Saves Computational Power)
+
+
+Kernel API
+> TCPDUMP requests a RAW Socket creation
+> Filters are set using the SO_ATTACH_FILTER
+  > # Allows us to attach a bpf to the socket to capture the incoming packets
+
+
+BPF Virtual Machine
+> Consists of an accumulator
+> Index register
+> Scratch memory store
+
+
+TCPDump filtering with BPF’s and bit-masking [SYNTAX] !!!!!!!!!!
+----[ tcpdump {A} [B:C] {D} {E} {F} {G} ]----
+> A = Protocol (ether | arp | ip | ip6 | icmp | tcp | udp)
+> B = Header Byte number
+> C = optional: Byte Length. Can be 1, 2 or 4 (default 1)
+> D = optional: Bitwise mask (&)
+> E = Operator (= | == | > | < | <= | >= | != | () | << | >>)
+> F = Result of Expression
+> G = optional: Logical Operator (&& ||) to bridge expressions
+
+[EXAMPLE]
+  /> tcpdump 'ether[12:2] = 0x0800 && (tcp[2:2] != 22 || tcp[2:2] != 23)'
+
+
+BitWise Masking
+> Can Read 1 (BYTE), 2 (HALF-WORD), or 4 (WORD)
+> Will only filter the byte level (alone)
+[EXAMPLES]
+  /> tcpdump 'ether[12:4] & 0xffff0fff = 0x810000abc'
+    > # looking at the vlan header (8100 header) 
+  /> tcpdump 'ip[1] & 252 = 32'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
