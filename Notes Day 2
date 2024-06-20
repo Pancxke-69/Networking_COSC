@@ -123,7 +123,12 @@ BitWise Masking
 > Will only filter the byte level (alone)
 [EXAMPLES]
   /> tcpdump 'ether[12:4] & 0xffff0fff = 0x810000abc'
-    > # looking at the vlan header (8100 header) 
+    > # looking at the vlan header (8100 header)
+ > oxffff0ffff
+     ||||-||||
+ >   810000abc
+  > # [f] is all bits on
+  > # [0] is no bits
   /> tcpdump 'ip[1] & 252 = 32'
 
 
