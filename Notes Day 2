@@ -129,6 +129,7 @@ BitWise Masking
  >   810000abc
   > # [f] is all bits on
   > # [0] is no bits
+ > # fc is the same as 0xffff00
   /> tcpdump 'ip[1] & 252 = 32'
 
 
