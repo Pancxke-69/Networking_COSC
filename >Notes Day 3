@@ -47,6 +47,46 @@ Python
 
 
 
+Socket Functions
+> Client
+  > socket(family, type, proto)
+  > Connect((ip, port))
+    > # TCP Only
+  > send()
+    > # Send to established Socket
+  > sendto()
+    > # Send to UNenstablished socket
+  > sendall()
+    > # Repeats 'send' until all data sent
+  > recv()
+    > # Receive data from socket
+  > recvfrom()
+    > # Recieve data and socket info
+  > close()
+    > # Close a socket file descriptor
+> Server
+  > socket
+  > setsockpot(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
+  > bind((",port))
+  > listen(1)
+    > # Enable a server to accept TCP connections
+  > accept()
+    > # TCP only
+  > recv()
+    > # Receive data from socket
+  > recvfrom()
+    > # Recieve data and socket info
+  > send()
+    > # Send to established Socket
+  > sendto()
+    > # Send to UNenstablished socket
+  > sendall()
+    > # Repeats 'send' until all data sent
+  > close()
+    > # Close a socket file descriptor
+
+
+
 
 [SOCKET SCRIPTS Stream, Dgram, Ipraw, Tcpraw]
 Stream (What to change)
