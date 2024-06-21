@@ -40,6 +40,66 @@ Python
   > # IPPROTO_ICMP
   > # IPPROTO_RAW
 
+[SOCKET SCRIPTS Stream, Dgram, Ipraw, Tcpraw]
+Stream (What to change)
+  > # Message (Optional)
+Dgram
+  > # Message (Optional)
+IPRaw
+  > # dst_ip
+  > # ip_ver_ihl
+  > # ip_tos
+  > # ip_id
+  > # ip_frag = 0
+  > # ip_ttl
+  > # ip_proto
+  > # Message (Optional)
+TCPRaw
+  > # dst_ip
+  > # dst_ip
+  > # ip_ver_ihl
+  > # ip_tos
+  > # ip_id
+  > # ip_frag = 0
+  > # ip_ttl
+  > # ip_proto
+  > # tcp_src
+  > # tcp_dst
+  > # tcp_ack_seq
+  > # tcp_data_off
+  > # tcp_reserve
+  > # tcp_flags (Optional if you want to just set a hex value instead of individual flags
+  > # tcp_win
+  > # tcp_chk = 0
+  > # tcp_urg_ptr
+  > # Message (Optional)
+
+
+
+Encoding 
+> Text to Hex
+  /> echo "Message" | xxd
+> File to Hex
+  /> xxd file.txt file-encoded.txt
+> Decode file from Hex
+  /> xxd -r file-encoded.txt file-decoded.txt
+> Python Hex Ecoding
+  # import binascii
+  # message = b'Message'
+  # hidden_msg = binascii.hexlify(message)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
