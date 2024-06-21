@@ -42,6 +42,8 @@ Python
 > Functions
   > # connect() [CLIENT-SIDE CONNECTION]
   > # close() [CLOSES TCP CONNECTION (Client/Server)]
+  > # sendto()
+    > # this sends data to a socket while not already being connected to a remote socket
 
 
 
