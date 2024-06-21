@@ -136,12 +136,58 @@ Encoding
   # message = b'Message'
   # hidden_msg = binascii.hexlify(message)
 
+====================================== METHODOLOGIES ============================================
 
+Net Recon Methodology
+> Host Discovery
+  > # Ruby ping sweep (if ping sweep available)
+  > # NMAP scan if no ping
+> Port Discovery
+  > # NMAP
+  > # nc scan script
+> Port Validation
+  > # Banner grabbing using nc
+> Follow-on actions based on ports found
+  > # if 21 FTP [IP ADDR] connects to ftp server
+    /> passive
+    /> ls
+    /> get [filename]
+  > # if 21 or 80 wget -r IP_ADDRESS (or) wget -r ftp://IP_ADDRESS (or) firefox
+  > # if 22 or 23 CONNECT and PASSIVE RECON
+> PASSIVE RECON
 
+Scan Methodology
+/> nmap -Pn [IP Addr] -T4 -p 21-23,80
+  > # "-Pn" is no host discovery. Its telling nmap that we know its up. No pinging
+  > # Quick Scan Ports 21-23, 80
+  > # Specific ports based on hints/clues found
+  > # Well know port range 1-1023
+  > # which tcpdump wireshark nmap telnet get curl ping
+  > # Chunks of 2000 or first 10000 ports (65535)
 
-
-
-
+Passive Recon Methodology
+/> hostname
+  > # permissions:
+    /> sudo -l
+> Interfaces and subnets
+  /> ip a
+> Neighbors
+  /> ip neigh
+> Files of interest
+  /> find / -iname flag* 2>/dev/null
+  /> find / -name hint*
+> Other listening ports
+  /> ss -ntlp (TCP)
+  /> ss -nulp (UDP)
+> Available Tools
+  /> which
+  /> tcpdump
+  /> wireshark
+  /> nmap
+  /> telnet
+  /> get
+  /> curl
+  /> ping
 
 
 
