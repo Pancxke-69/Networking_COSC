@@ -39,6 +39,12 @@ Python
   > # IPPROTO_IP
   > # IPPROTO_ICMP
   > # IPPROTO_RAW
+> Functions
+  > # connect() [CLIENT-SIDE CONNECTION]
+  > # close() [CLOSES TCP CONNECTION (Client/Server)]
+
+
+
 
 [SOCKET SCRIPTS Stream, Dgram, Ipraw, Tcpraw]
 Stream (What to change)
