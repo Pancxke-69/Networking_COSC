@@ -71,7 +71,7 @@ TCPRaw
   > # tcp_flags (Optional if you want to just set a hex value instead of individual flags
   > # tcp_win
   > # tcp_chk = 0
-  > # tcp_urg_ptr
+  > # tcp_urg_ptr = 0
   > # Message (Optional)
 
 
