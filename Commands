@@ -31,3 +31,7 @@ BPF [EXAMPLES]
  > # this filters for traceroute being used
 /> ether[12:4]&0xffff0fff=0x81000001&&ether[16:4]&0xffff0fff=0x8100000a
  > # this filters for vlan hopping from vlan 1 to vlan 10 (looks through the vlan tags) [double-tagging]
+
+
+Opening Images in Terminal
+/> mimeopen -d <file>
