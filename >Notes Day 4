@@ -1,9 +1,153 @@
 Recon Stages
+# View (Passive_Active_Disovery.png) for the details on the following:
 > Passive External
-  > # Ping, NMAP, netcat, curl and wget
+  > Technologies
+    > # Shodan.io
+  > Dig vs WHOIS
+    > # Whois queries DNS Registrar over TCP Port 43 (Info about owner who is registered to domain)
+      [SYNTAX: whois zonetransfer.me]
+    > # Dig queries DNS Server over UDP Port 53 (Name to IP Records)
+      [SYNTAX: dig zonetransfer.me (A|AAAA|MX|TXT|NS|SOA)]
+  > Zone Transfer
+    [SYNTAX: dir axr {@soa.server} {target-site}]
+    [EXAMPLE: dig axfr @nsztm1.digi.ninja zonetransfer.me]
+  > Historical Content
+    > The WayBack Machine
+  > Google Searches
+    > https://gist.github.com/sundowndev/283efaddbcf896ab405488330d1bbc06 [List of Filters]
+    > https://dorksearch.com/ [Dork Search]
+  > Passive OS Fingerprinter (POF)
+    [SYNTAX: sudo p0f -i eth0
+             sudo p0f -r test.pacap]
+    > # Examine packets sent to/from target
+  > Social Engineering
+  > Technical based
+  > Other Types (Dumpster Diving/Shoulder Surf)
+
+
 > Active External
+  > Strategies
+    > # Remote to Local
+    > # Local to Remote
+    > # Local to local
+    > # Remote to remote
+  > Scanning approach
+    > # Aim
+      > # Wide Range Target Scan and Target Specific Scan
+    > # Method
+      > # Single Source Scan (1-to-1 or 1-to-many)
+      > # Distributed Scan (many-to-one or many-to-many)
+  > NMAP Service Discovery
+    > # Broadcast Ping/Ping sweep (-sP, -PE)
+    > # SYN scan (-sS)
+    > # Full connect scan (-sT)
+    > # Null scan (-sN)
+    > # FIN scan (-sF)
+    > # XMAS tree scan (-sX)
+    > # UDP scan (-sU)
+    > # Idle scan (-sI)
+      > # Zombie scan, because it uses another box to scan
+    > # ACK/Window scan (-sA_
+    > # RPC scan (-sR)
+    > # FTP scan (-b)
+    > # Decoy scan (-D)
+    > # OS Fingerprinting scan (-O)
+    > # Version scan (-sV)
+    > # Protocol ping (-PO)
+    > # Discovery probes (-PE,-PP,-PM)
+    /> -PE (ICMP ping)
+    /> -Pn (No ping)
+  > NMAP TIMEOUT
+    /> -T0 (Paranoid)
+    /> -T1 (Sneaky)
+    /> -T2 (Polite)
+    /> -T3 (Normal)
+    /> -T4 (Aggressive)
+    /> -T5 (Insane)
+  > Traceroute (Firewalking)
+  > Netcat (Scanning)
+  [SYNTAX: nc (options) (Target IP) (Target Ports(s))]
+    /> -z (Port scanning mode)
+    /> -v (Be verbose)
+    /> -n (Do not resolve ip addresses)
+    /> -w1 (Set time out value to 1)
+    /> -u (To switch to UDP)
+  > Banner Grabbing
+    > # Find what is runnig on a particular port
+    [SYNTAX: nc (Target IP) (Target Port)]
+    > # -u for UDP
+  > Curl and wget
+    > Curl (Displays ASCII)
+      /> curl http://172.16.82.106
+      /> curl ftp://172.16.82.106
+    > wget (Downloads) (-r recursive) # this basically copies html code and downloads the code in text
+      /> wget -r http://172.16.82.106
+      /> wget -r ftp://172.16.82.106
+
+
+
 > Passive Internal
+  > Packet Sniffers (Wirshark, TCPdump)
+  > Native Host Tools 
+    > TCP Info
+      /> ipconfig /all (windows)
+      /> ifconfig -a (linux)
+      /> show interface (vyos)
+    > Show NDS Configuration
+      /> ipconfig /displaydns (windows)
+      /> cat /etc/resolv.conf
+    > Show ARP Cache
+      /> arp -a (windows)
+      /> ip neighbor [arp -a] (linux)
+    > Show Network connections
+      /> netstat (windows)
+      /> ss [netstat] (linux)
+    > Services file
+      /> %SystemRoot%\system32\drivers\etc\services (windows)
+      /> /etc/services (linux)
+    > OS Information
+      /> systeminfo (windows)
+      /> uname -a and /etc/os-release (linux)
+    > Show running processes
+      /> tasklist (windows)
+      /> ps or top (linux)
+    > Command Path
+      /> which
+      /> wheris
+    > Routing table
+      /> route print (windows)
+      /> ip route [netstat -r] (linux)
+      /> show ip route (vyos)
+    > File search
+      /> find / -name hint* 2> /dev/null
+      /> find / -iname flag* 2> /dev/null
+      /> locate flag*
+
+
+
 > Active Internal
+  > ARP Scanning
+    /> arp-scan --interface=eth0 --localnet
+    /> nmap -sP -PR 172.16.82.96/27
+  > Ping Scanning
+    /> for i in {1..254}; do (ping -c 1 172.16.82.$i | grep "bytes from" &) ; done
+
+
+Mapping
+> Device Type (Router/Host)
+> System Host-names
+> Interface Names
+> IP Address and CIDRS for all interfaces
+> TCP and UDP ports
+> MAC Addresses OS type/version
+> Known credentials
+
+
+
+
+
+
+
 
 
 
