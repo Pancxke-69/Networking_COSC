@@ -103,6 +103,223 @@ XXD
 
 
 
+Tunneling Overview
+> Dual Stack
+  > # Both IPv6 and IP4
+> 6in4
+  > # IPv6 encapsulated into IPv4
+> 6to4
+  > # Translates IPv6 to IPv4
+> 4in6
+  > # IPv4 encapsulated in IPv6
+> Teredo
+> ISATRAP
+
+IPv6 over IPv4
+> # Permits ipv6 to be encapsulated in order to move through a ipv4 network
+> # Done by the dual stack router
+> # Payload is not generally encrypted
+> # IPSEC commonly used to secure payloads
+
+Dual Stack
+> # Configures an ipv4 and ipv4 address on all devices
+> # Resource intesive
+> # Allows for ipv4 and ipv6 routing because it has the addresses already set
+> # Can use both but not interchangeably
+
+Teredo Tunneling
+> # Allows ipv4 clients to access ipv6 clients
+> # Encapsulates ipv6 packets within UDP
+> # Commonly used for devices behind the NAT
+
+ISATAP
+> # Allows ipv6 hosts to communicate over an ipv4 network within a site
+> # Can be used over the internet for specific site-to-site
+> # Generates a link-local address using its ipv4 address
+
+
+
+Covert Channels
+> # Using common legitimate protocols to transfer data in illigitimate ways
+> # Unauthorized/hidden communication between entities
+> # Utilizes computer system resources, mechanisms, or protocols
+
+Types of Covert Channels
+> Storage
+  > Payload
+  > Header
+    > # IP Header
+    > # TCP Header
+> Timing
+  > # Modifying transmissino of legitimate traffic
+  > # Watch TTL Changes
+
+
+Detecting covert channels with icmp
+> # ICMP works with one request and one reply answer
+  > # Type 8 code 0 request
+  > # Type 0 code 0 answer
+> Check for:
+  > # Payload imbalance
+  > # Request/responce imbalance
+  > # Large payloads in response
+
+
+
+Detecting covert channels with dns
+> # DNS is a request/response protocol
+> # 1 request typically gets 1 response
+> # Payloads generally do not exceed 512 bytes
+> # Check for:
+  > # Request/response imbalances
+  > # Unusual payloads
+  > # Burstiness or continuous use
+
+
+
+Detecting covert channels with http
+> # Request/Response protocol to pull web content
+> # GET request may include .png, .exe, .(anything) files
+> # Can very in sizes of payloads
+> # Typically "bursty" but not steady
+
+
+
+
+Steganography
+> # Hiding messages inside legitimate information objects
+> Injection
+  > # Done by inserting message into usused (whitespace) of the file, usualy in a graphic
+  > # Second most common method
+  > # Adds size to the file
+  > # Hard to detect unless you have original fil
+  > Tools:
+    > # Steghide
+> Substitution
+  > # Done by inserting message into the insignificant portion of the file
+  > # Most common method used
+  > # Elements within a digital medium are replaced with hidden information
+  > Example:
+    > # Change color pallate
+> Propagation
+  > # Generates a new file entirely
+  > # Needs special software to manupulate file
+  > Tools
+    > # StegSecret
+    > # HyDEn 
+    > # Spammimic
+
+
+
+SSH Key Change FIX
+/> ssh-keygen -f "/home/student/.ssh/known_hosts" -R "172.16.82.106"
+
+
+
+SSH Port Forwarding
+> # Creates Channels using SSH-CONN Protocol
+> Command Options
+  /> -L (Creates a port on the client mapped to a ip:port via the server)
+  /> -D (Creates a port on the client and sets up a SOCKS4 proxy tunnel where the target ip:port is specified dynamically
+  /> -R Creates the port on the server mapped to a ip:port via the client
+  /> -NT (Do not execute a remote command and disable pseudo-tty (will hang window))
+[LOCAL PORT FORWARDING]
+/> ssh -p <optional alt port> <user>@<server ip> -L <local bind port>:<tgt ip>:<tgt port> -NT
+/> ssh -L <local bind port>:<tgt ip>:<tgt port> -p <alt port> <user>@<server ip> -NT
+
+[LOCAL PORT FORWARD TO LOCALHOST OF SERVER]
+/> ssh student@172.16.1.15 -L 1122:localhost:22
+/> ssh -L 1122:localhost:22 student@172.16.1.15
+/> ssh student@localhost -p 1122
+
+[LOCAL PORT FORWARD TO LOCALHOST OF SERVER]
+/> ssh student@172.16.1.15 -L 1123:localhost:23
+/> ssh -L 1123:localhost:23 student@172.16.1.15
+/> telnet localhost 1123
+/> firefox http://localhost:1123
+
+[LOCAL PORT FORWARD TO REMOTE TARGET VIA SERVER]
+/> ssh student@172.16.1.15 -L 2222:172.16.40.10:22
+/> ssh -L 2222:172.16.40.10:22 student@172.16.1.15
+/> ssh student@localhost -p 2222
+
+[LOCAL PORT FORWARD TO REMOTE TARGET VIA SERVER]
+/> ssh student@172.16.1.15 -L 2223:172.16.40.10:23
+/> ssh -L 2223:172.16.40.10:23 student@172.16.1.15
+/> telnet localhost 2223
+
+[LOCAL PORT FORWARD TO REMOTE TARGET VIA SERVER]
+/> ssh student@172.16.1.15 -L 2280:172.16.40.10:80
+/> ssh -L 2280:172.16.40.10:80 student@172.16.1.15
+/> firefox http://localhost:2280
+
+[FORWARD THROUGH TUNNEL]
+/> ssh student@172.16.1.15 -L 2222:172.16.40.10:22
+/> ssh student@localhost -p 2222 -L 3322:172.16.82.106:22
+/> ssh student@localhost -p 3322
+
+[FORWARD THROUGH TUNNEL]
+/> ssh student@172.16.1.15 -L 2222:172.16.40.10:22
+/> ssh student@localhost -p 2222 -L 3323:172.16.82.106:23
+/> telnet localhost 3323
+
+[DYNAMIC PORT FORWARDING]
+/> ssh <user>@<server ip> -p <alt port> -D <port> -NT
+/> ssh -D <port> -p <alt port> <user>@<server ip> -NT
+> # Proxychains default port is 9050
+> # Creates a dynamic socks4 proxy that interacts alone, or with a previously established remote or local port forward
+> # Allows the use of scripts and other userspace programs through the tunnel
+
+[SSH DYNAMIC PORT FORWARDING 1-STEP]
+/> sh student@172.16.1.15 -D 9050
+/> ssh -D 9050 student@172.16.1.15
+---------------------------------
+proxychains ./scan.sh
+proxychains nmap -Pn 172.16.40.0/27 -p 21-23,80
+proxychains ssh student@172.16.40.10
+proxychains telnet 172.16.40.10
+proxychains wget -r http://172.16.40.10
+proxychains wget -r ftp://172.16.40.10
+---------------------------------
+
+[SSH DYNAMIC PORT FORWADING 2-STEP]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
