@@ -229,28 +229,23 @@ SSH Port Forwarding
 
 [LOCAL PORT FORWARD TO LOCALHOST OF SERVER]
 /> ssh student@172.16.1.15 -L 1122:localhost:22
-/> ssh -L 1122:localhost:22 student@172.16.1.15
 /> ssh student@localhost -p 1122
 
 [LOCAL PORT FORWARD TO LOCALHOST OF SERVER]
 /> ssh student@172.16.1.15 -L 1123:localhost:23
-/> ssh -L 1123:localhost:23 student@172.16.1.15
 /> telnet localhost 1123
 /> firefox http://localhost:1123
 
 [LOCAL PORT FORWARD TO REMOTE TARGET VIA SERVER]
 /> ssh student@172.16.1.15 -L 2222:172.16.40.10:22
-/> ssh -L 2222:172.16.40.10:22 student@172.16.1.15
 /> ssh student@localhost -p 2222
 
 [LOCAL PORT FORWARD TO REMOTE TARGET VIA SERVER]
 /> ssh student@172.16.1.15 -L 2223:172.16.40.10:23
-/> ssh -L 2223:172.16.40.10:23 student@172.16.1.15
 /> telnet localhost 2223
 
 [LOCAL PORT FORWARD TO REMOTE TARGET VIA SERVER]
 /> ssh student@172.16.1.15 -L 2280:172.16.40.10:80
-/> ssh -L 2280:172.16.40.10:80 student@172.16.1.15
 /> firefox http://localhost:2280
 
 [FORWARD THROUGH TUNNEL]
@@ -260,19 +255,16 @@ SSH Port Forwarding
 
 [FORWARD THROUGH TUNNEL]
 /> ssh student@172.16.1.15 -L 2222:172.16.40.10:22
-/> ssh student@localhost -p 2222 -L 3323:172.16.82.106:23
 /> telnet localhost 3323
 
 [DYNAMIC PORT FORWARDING]
 /> ssh <user>@<server ip> -p <alt port> -D <port> -NT
-/> ssh -D <port> -p <alt port> <user>@<server ip> -NT
 > # Proxychains default port is 9050
 > # Creates a dynamic socks4 proxy that interacts alone, or with a previously established remote or local port forward
 > # Allows the use of scripts and other userspace programs through the tunnel
 
 [SSH DYNAMIC PORT FORWARDING 1-STEP]
 /> sh student@172.16.1.15 -D 9050
-/> ssh -D 9050 student@172.16.1.15
 ---------------------------------
 proxychains ./scan.sh
 proxychains nmap -Pn 172.16.40.0/27 -p 21-23,80
@@ -282,17 +274,36 @@ proxychains wget -r http://172.16.40.10
 proxychains wget -r ftp://172.16.40.10
 ---------------------------------
 
-[SSH DYNAMIC PORT FORWADING 2-STEP]
+[REMOTE PORT FORWARDING]
+/> ssh -p <optional alt port> <user>@<server ip> -R <remote bind port>:<tgt ip>:<tgt port> -NT
+
+[Remote Port Forwarding from localhost of client]
+/> ssh student@10.10.0.40 -R 4422:localhost:22
 
 
+========================================= Tunneling Methodology ======================================
+> # SSH to machine within your reach (1 hop), Lets call it host "A"
+> # Set a Dynamic port of 9050 for proxychains
+  > # 9050 is going to be the same everytime for proxychains
+  > # Can only have one open at a time
+> # Run proxychains command in separate terminal (since you are tunneled to "A" you can run commands on it through the tunnel)
+  > # Begin network recon on the network inside host "A"
+> # Find the device you want to connect to next
+> # Change your first tunnel
+  > # Take out -D 9050 (proxychains ability)
+  > # Put -L <RHP on local machine>:<IP of host "B">:<Port you will use to connect to host "B">
+    > # When you put your local RHP it now loops back to you through the tunnel so you can access host "B"
+> # Once you are connected to host, Open another terminal and type in the command: ssh <user>:localhost -p <alternate port/RHP used in tunnel> -D 9050
+  > # This allows you to perform proxychains on host "B" since you are using the rhp that the tunnel is connected to.
+> # Proceed to perform network recon for the next machine and continue this process.
 
 
+======================== CTF =======================
+T3 (Atropia) Float IP address is - 10.50.20.51
 
+T4 (Pineland) Float IP address is - 10.50.24.9
 
-
-
-
-
+Entry Float IP: 10.50.24.91
 
 
 
