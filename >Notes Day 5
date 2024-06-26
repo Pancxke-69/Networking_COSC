@@ -305,7 +305,13 @@ T4 (Pineland) Float IP address is - 10.50.24.9
 
 Entry Float IP: 10.50.24.91
 
-
+[TUNNEL COMMANDS]
+/> ssh net1_student12@10.50.20.51 -L 11201:localhost:11202 -NT
+  > # This opens a tunnel on Target 3 so Jump Machine can talk on 11201 (also it encapsulates port 11202 into it so both tunnels are combined into 1)
+/> ssh net1_student12@10.3.0.10 -R 11202:localhost:22 -NT
+  > # This opens a tunnel from Target 3 to target 4, since ssh is disabled, telnet into it. Creates port 11202 so it can talk on it. 
+/> ssh net1_student12@localhost -p 11201 -D 9050 -NT
+  > # This adds proxychains to 11201.
 
 
 
