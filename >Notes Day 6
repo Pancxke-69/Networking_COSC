@@ -8,10 +8,10 @@ Blue Host:
 /> ssh user@localhost -p 11605 -D 9050
 
 [CFT TUNNELS]
-
-lin-ops      t1      t2      t3      t4
-            23       2222    5555    23
-
+---------------------------------------------
+lin-ops  |    t1   |   t2   |   t3    |  t4
+         |    23   |   2222 |   5555  |  23
+---------------------------------------------
 telnet in:
 /> ssh user@<lin-ops> -R 11201:localhost:22
   > # SSH is disabled, so we need to telnet in and establish a reverse tunnel
