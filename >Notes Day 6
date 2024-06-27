@@ -1,1 +1,8 @@
-
+[TUNNEL EXAMPLE]
+telnet in:
+/> ssh user@10.50.23.21 -R 11601:localhost:23
+Blue Host:
+/> ssh user@localhost  -p 1602 -L 11603:localhost:2222
+/> ssh user@localhost -p 1603 -L 11604:172.16.10.121:2223
+/> ssh user@localhost -p 11604 -L 11605:192.168.10.69:22
+/> ssh user@localhost -p 11605 -D 9050
