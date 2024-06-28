@@ -1,0 +1,249 @@
+[Tunnel Practice]
+
+/> ssh user@localhost -p 1234 -L 11201:172.17.17.28(tB):23
+  > # Establish a tunnel that allows lin-ops to telnet to target B through a specified tunnel port
+Telnet in:
+/> telnet 172.17.17.28 11201
+  > # Telnet through port made from the tunnel that established telnet
+/> ssh user@172.17.17.17 -p 1234 -R 11211:localhost:4321
+  > # Establish reverse tunnel from target B back to target A
+/> lin-ops:
+/> ssh user@localhost -p 1234 11203:localhost:11211
+  > # Join local and reverse tunnels together by taking the port from the local tunnel, and the port from the reverse tunnel and joining them together with a new port
+/> ssh user@localhost -p 11203 -D 9050
+  >  # Establish a dynamic tunnel using the port that joined the two tunnels together so we can run proxychains for target B
+
+
+PCAP Analysis
+> Tools 
+  > Sensors
+    > In-Line
+      > # Test Access Point (TAP)
+        > # Appliance placed between 2 network devices
+        > # Must be placed "in line" of network traffic
+        > # Not scalable
+      > # Man-in-the-Middle (MitM)
+        > # Attacker can use ARP or some other method/protocol
+        > # Must be on the same network as the victim
+      > # Placed between communicating devices to stop attacks
+        > # IPS
+        > # Firewall
+    > Out of band (Passive)
+      > # Switched Port Analyzer (SPAN)
+        > # Allows us to take multiple ports and put it down in one port
+        > # Can have a high degree of packet loss
+      > # Monitors network segments
+      > # Gets copies of network traffic
+        > # IDS
+      > # Does not impact network latency
+
+
+
+Fingerprinting and Host Identification
+> Fingerprinting
+  > # Easier
+  > # Send packets to the target and monitor response
+  > Tools:
+    > # Nmap
+    > # Xprobe2
+    > # sinfp3
+  > Passive OS fingerprinting
+    > # More difficult
+    > # Rely on sniffing packets
+    > Tools:
+      > # p0f
+        > # Looks at variations in:
+          > # Initial TTL
+          > # Fragmentation Flag
+          > # Default IP Header packet length
+          > # Windows size
+          > # TCP Options
+        > # Config stored in /etc/p0f/p0f.fp
+      > # Ettercap
+      > # PRADS
+
+
+Known Windows and Linux Ports
+> Windows
+  > # 88 - Kerberos / Domain Controller
+  > # 137/138/139 - NetBIOS
+  > # 445 - SMB
+> Linux
+  > # 22 - SSH
+  > # 111 - SUN RPC
+> Ephereral Ports
+  > # IANA 48152-65535
+  > # Linux 32768-60999
+  > # Windows XP 1025-5000
+  > # Win 7/8/10 use IANA
+  > # Win Server 2008 1025-60000
+  > # Sun Solaris 32768-65535
+
+
+Baselining
+> Preparation
+  > # Network Diagram
+  > # Known Servers, Hosts, and Networking devices
+  > # Knows IPs, ports, and protocols
+  > # Known forbidden IPs, ports, and protocols
+  > # Known traffic "flows"
+
+
+Hacker Methodologoes
+> Footprinting
+> Network scanning
+> Network enumeration
+> Vulnerability Assessment
+
+
+
+Anomoly Detection
+> Indicator of Attack (IOA)
+  > # Proactive
+  > # A series of actions that are suspicious together
+  > # Focus on Intent
+  > # Looks for what must happen
+    > # Code execution, persistence, lateral movement, etc.
+> Indicator of Compromise (IOC)
+  > # Reactive
+  > # Forensic Evidence
+  > # Provides information that can change
+    > # Malware, IP addresses, exploits, signatures
+> Some Indicators
+  > # .exe/executable files
+  > # NOP sled
+  > # Repeated Letters
+  > # Well known signatures
+  > # Mismatched Protocols
+  > # Unusual traffic
+  > # Large amounts of traffic/ unusual times
+> Signs of IOA
+  > # Destination IP/PORTS
+  > # Public Servers/DMZs
+  > # Off-Hours
+  > # Network Scans
+  > # Alarm Events
+  > # Malware Reinfection
+  > # Remote Logins
+  > # High amounts of some protocols
+> Signs of IOC
+  > # Unusual traffic outbound
+  > # Anomalous user login or account use
+  > # Size of responses for HTML
+  > # High number of requests for the same files
+  > # Using non-standard ports/ applicatino-port mismatch
+  > # Writing changes to the registry/system files
+  > # Unexpected/unusual patching or tasks
+
+
+Types of Malware
+> Adware/Spyware
+  > # Large amounts of traffic/ unusual traffic
+  > # IOA
+    > # Destinations
+  > # IOC
+    > # Unusual traffic outbound
+> Virus and Worms
+  > # Phishing/ watering hole
+  > # IOA
+    > # Alarm events, Email Protocols(Virus)
+  > # IOC
+    > # Changes to the registry/ system files
+> Trojan
+  > # Beaconing
+  > # IOA
+    > # Destinations
+  > # IOC
+    > # Unusual traffic outbound, unusual tasks, changes to registry/ system files
+> Rootkit
+  > # IOA
+    > # Malware Reinfection
+  > # IOC
+    > # Anomalous user login/ account use
+> Backdoor
+  > # IOA
+    > # Remote Logins
+  > # IOC
+    > # Anomalous user login/ account use
+> Botnets
+  > # Large amounts of IPs
+  > # IOA
+    > # Destinations, remote logins
+  > # IOC
+    > # Unusual tasks, anomalous user login/ account use
+> Polymorphic/Metamorphic Malware
+  > # Depends on the malware type/class
+> Ransomeware
+  > # IOA
+    > # Destinations, Ports, Malware reinfection
+  > # IOC
+    > # Unusual traffic outbound, non-standard ports, unusual tasks
+> Mobile Code
+  > # IOA
+    > # Depends on the malware type/class
+> BIOS/Firmware Malware
+  > # IOA
+    > # Malware infection
+  > # IOC
+    > # Depends on the malware type/class
+
+
+Viewing Network Anomalies through traffic analysis
+> ICMP Tunneling
+  > # ICMP PING uses type 8 and type 0
+  > # Both should be
+    > # 1 for 1
+    > # Same size and payload
+  > Look out for:
+    > # Request/Reply imbalances
+    > # Abnormal/different payloads
+> DNS Tunneling
+  > # DNS Uses Query/Response
+    > # 1 Query typically gets 1 response
+  > Look out for:
+    > # Query/Response imbalances
+    > # Abnormal/different payloads
+    > # Continuous Queries
+> HTTP(S) Tunneling
+  > # HTTP is "bursty" in nature
+  > # Client issues request and the server responds
+  > Look out for:
+    > # Steady connections
+    > # HTTPs you will need to check session establishment for abnormalities
+> Beaconing
+  > # Call back to the C&C server (Command and Control)
+  > # Gets/sends commands from/to C&C
+  > Look out for:
+    > # Beacon timing
+      > # Commonly at regular intervals
+    > # Beacon size
+      > # Check-Ins may not have any payloads
+      > # Orders will have payloads
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
