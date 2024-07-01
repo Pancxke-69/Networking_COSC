@@ -1,0 +1,18 @@
+[TUNNEL PRACTICE]
+telnet TA
+/> ssh user@IH -R 11201:localhost:8462
+  > # From IH to TA
+/> ssh user@localhost -p 11201 11202:TB:22
+  > # From IH to TA to TB
+/> ssh user@localhost -p 11202 -L 11203:TC:6481
+  > # From IH to TA to TB to TC
+/> ssh user@localhost -p 11203 -L 11204:TD:23
+  > # From IH to TA to TB to TC to TD (Telnet only)
+/> telnet localhost -p 11204
+  > # Telnet from IH to TD
+/> ssh user@TC -p 6481 -R 11211:localhost:22
+  > # From TD to TC
+/> ssh user@localhost -p 11203 -L 11205:localhost:11211
+  > # From IH to TA to TB to TC to TD (ssh enabled)
+/> ssh user@localhost -p 11205 -D 9050
+  > # Proxychains from IH on TD
