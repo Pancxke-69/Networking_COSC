@@ -647,7 +647,7 @@ sudo nft add rule ip CCTC OUTPUT tcp dport { 80 } ct state { new, established } 
 all three flags separated by underscores = 953e720e688941b15b72c098022c51c3
 
 
-Question 4 flag: d3b88e04de1e76482a1972f36734a7d8
+Validation flag: d3b88e04de1e76482a1972f36734a7d8
 
 
 Task 2
@@ -663,7 +663,7 @@ sudo nft add table ip NAT
 nft add rule ip NAT POSTROUTING ip saddr 192.168.3.30 oif eth0 snat 172.16.82.112
 be33fe60229f8b8ee22931a3820d30ac
 
-
+Validation flag: e4f4c65b3884eadf7986adc76caea32c
 
 
 
