@@ -2,7 +2,7 @@
 telnet TA
 /> ssh user@IH -R 11201:localhost:8462
   > # From IH to TA
-/> ssh user@localhost -p 11201 11202:TB:22
+/> ssh user@localhost -p 11201 -L 11202:TB:22
   > # From IH to TA to TB
 /> ssh user@localhost -p 11202 -L 11203:TC:6481
   > # From IH to TA to TB to TC
