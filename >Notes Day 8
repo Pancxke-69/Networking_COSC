@@ -468,7 +468,8 @@ Snort Rules
   > To see binary log file in plain text along with hex
     /> tcpdump -r <log file> -XX -vn
       > # -vn just shows more information like TTL
-
+  > To run snort
+    /> snort -D -l /var/log/snort/ -c /etc/snort/snort.conf
 
 
 Snort IDS/IPS Rule Header
