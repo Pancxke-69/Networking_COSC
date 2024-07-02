@@ -354,6 +354,7 @@ Configure NFtables mangle rules
   /> nft add rule ip MANGLE OUTPUT oif eth0 ip ttl set 128
   /> nft add rule ip MANGLE OUTPUT oif eth0 ip dscp set 26
 
+============================= Firewalls ================================
 
 Describe Firewall Type
 > # Zone-Based Policy Firewall (Zone-Policy Firewall, ZBF or ZFW)
@@ -375,7 +376,7 @@ Typical locations for filtering devices
 > Switches
 
 
-Cisco Access Control List
+Cisco Access Control List      <---------- This will not be on the test (switch ACL)
 > Standard numbered ACL syntax
   /> router(config)# access-list {1-99 | 1300-1999}  {permit|deny}  {source IP add} {source wildcard mask}
   /> router(config)#  access-list 10 permit host 10.0.0.1
@@ -383,7 +384,7 @@ Cisco Access Control List
   /> router(config)#  access-list 10 permit any
 
 
-Standard named ACL syntax
+Standard named ACL syntax (place as far way from the host as posssible)
   /> router(config)# ip access-list standard [name]
   /> router(config-std-nacl)# {permit | deny}  {source ip add}  {source wildcard mask}
   /> router(config)#  ip access-list standard CCTC-STD
@@ -393,7 +394,15 @@ Standard named ACL syntax
 
 
 
-Extended numbered ACL Syntax
+Signature vs Behavior based detection
+> Signature Based
+  > # Looks for known Intrusion stuff
+> Behavior Based
+  > # Looks at the behavior and identifies intrusion based on the way it acts
+
+
+
+Extended numbered ACL Syntax (as close to the source as possible)
 /> router(config)# access-list {100-199 | 2000-2699} {permit | deny} {protocol} {source IP add & wildcard} {operand: eq|lt|gt|neq} 
    {port# |protocol} {dest IP add & wildcard} {operand: eq|lt|gt|neq} {port# |protocol}
 /> router(config)# access-list 144 permit tcp host 10.0.0.1 any eq 22
@@ -450,6 +459,15 @@ Snort Rules
     /> sudo snort -D -c /etc/snort/snort.conf -l /var/log/snort
   > To run snort against a PCAP
     /> sudo snort -c /etc/snort/rules/file.rules -r file.pcap
+  > Check version
+    /> snort --version
+  > To check for what the log file for the running daemon is
+    /> ps -elf | grep snort
+  > SYNTAX
+    /> alert [tcp,udp,icmp] [SIP] [SPORT] [<-,->,<->] [DIP] [DPORT] (msg:<message>; sid:<ID>; rev:<rev number>;)
+  > To see binary log file in plain text along with hex
+    /> tcpdump -r <log file> -XX -vn
+      > # -vn just shows more information like TTL
 
 
 
@@ -466,6 +484,7 @@ Snort IDS/IPS Rule Header
 
 
 Snort IDS/IPS General Rule options:
+/> alert [tcp,udp,icmp] [SIP] [SPORT] [<-,->,<->] [DIP] [DPORT] (msg:<message>; sid:<ID>; rev:<rev number>;)
 > msg:"text" - specifies the human-readable alert message
 > reference: - links to external source of the rule
 > sid: - used to uniquely identify Snort rules (required)
