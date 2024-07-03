@@ -1,4 +1,4 @@
 Floating IP of start pivot: 10.50.37.126
-/share/usr/cctc (special directoy possible flag)
+/usr/share/cctc (special directoy possible flag)
 use the port range that we are assigned
 echo "123" | base64 (to get the answer)
