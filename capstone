@@ -2,3 +2,8 @@ Floating IP of start pivot: 10.50.37.126
 /usr/share/cctc (special directoy possible flag)
 use the port range that we are assigned
 echo "123" | base64 (to get the answer)
+
+
+tcpdump -n -r capstone-bpf.pcap "ip[6]&64!=0&&tcp[13]=5" | wc -l
+
+tcpdump -n -r capstone-bpf.pcap "ip[12:4]=0x0a000068&&tcp[13]=0x12" | wc -l
