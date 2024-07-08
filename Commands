@@ -1,5 +1,7 @@
 /> iptables -t mangle -A POSTROUTING -o eth0 -j TTL --ttl-set xx
   > # This allows you to change TTL with iptables
+/> for i in {1..254}; do (ping -c 1 192.168.65.$i | grep "bytes from" &) ; done
+  > # Ruby ping sweep
 
 
 BPF [EXAMPLES]
