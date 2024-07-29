@@ -57,10 +57,10 @@ BLH--------T1--------T2--------T3--------T4
 * `ssh comrade@127.0.0.1 -p11205 -D9050 -NT`
   - Authenticates to T4 and adds proxychains to the tunnel
 # What your terminal should look like after you are done
-* `ssh student@1.1.1.1 -L 11201:1.1.1.1:2222 -NT`
-* `ssh student@127.0.0.1 -p11201 -L 11202:2.2.2.2:23 -NT`
-* `ssh student@1.1.1.1 -p2222 -R 11211:127.0.0.1:22 -NT`
-* `ssh student@127.0.0.1 -p11201 -L 11203:127.0.0.1:11211 -NT`
-* `ssh student@127.0.0.1 -p11203 -L 11204:3.3.3.3:3333 -NT`
-* `ssh comrade@127.0.0.1 -p11204 -L 11205:4.4.4.4:22 -NT`
-* `ssh comrade@127.0.0.1 -p11205 -D9050 -NT`
+* `[BLH]> ssh student@1.1.1.1 -L 11201:1.1.1.1:2222 -NT`
+* `[BLH]> ssh student@127.0.0.1 -p11201 -L 11202:2.2.2.2:23 -NT`
+* `[T2]> ssh student@1.1.1.1 -p2222 -R 11211:127.0.0.1:22 -NT`
+* `[BLH]> ssh student@127.0.0.1 -p11201 -L 11203:127.0.0.1:11211 -NT`
+* `[BLH]> ssh student@127.0.0.1 -p11203 -L 11204:3.3.3.3:3333 -NT`
+* `[BLH]> ssh comrade@127.0.0.1 -p11204 -L 11205:4.4.4.4:22 -NT`
+* `[BLH]> ssh comrade@127.0.0.1 -p11205 -D9050 -NT`
