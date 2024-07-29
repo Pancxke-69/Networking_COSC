@@ -1,3 +1,9 @@
+# Tunnels Example
 ```
-BLH		JUMP		T1		T2		T3		T4
+BLH		T1		T2		T3		T4
 ```
+###### BLH - 10.10.10.10 (SSH 22)
+###### T1 - 1.1.1.1 (SSH 2222)
+###### T2 - 2.2.2.2 (TELNET ONLY)
+###### T3 - 3.3.3.3 (SSH 3333)
+###### T4 - 4.4.4.4 (SSH 22)
