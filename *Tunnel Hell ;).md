@@ -29,4 +29,10 @@ BLH--------T1--------T2--------T3--------T4
     - This will get you into T2 terminal
 * Establish a tunnel that goes backwards and connects T1 to T2 from T2
   - You have to use a reverse tunnel to the port you make for the tunnel goes onto T1
-  - `ssh student@127.0.0.1 -R 11211:127.0.0.1:2222`
+  - `ssh student@1.1.1.1 -p2222 -R 11211:127.0.0.1:22`
+    - This is telling T1 to connect to T2 and putting port `11211` on T1.
+    - Remember T1's alternate ssh port is `2222` so we have to put `-p2222` so it knows what port to use ssh on
+* Establish a tunnel that connects BLH to T2
+  - Since you used a reverse tunnel, it is facing a different direction. ---><--- instead of --->--->
+  - You have to make them face the same way
+  - `ssh student@127.0.0.1 -p11201 -L 11203:127.0.0.1:22`
