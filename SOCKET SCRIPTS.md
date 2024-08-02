@@ -1,5 +1,5 @@
-=========================================[STREAM SOCKET]=================================================
-
+## Stream Socket
+```
 #!/usr/bin/env python3
 import socket
 
@@ -23,14 +23,9 @@ data, conn = s.recvfrom(1024)
 # you dont have to put in utf-8 because its the default
 print(data.decode('utf-8'))
 s.close()
-
-
-
-
-
-
-================================================[DGRAM]======================================================
-
+```
+## Dgram Socket
+```
 !/usr/bin/env python3
 import socket
 
@@ -48,14 +43,9 @@ response, conn = s.recvfrom(1024)
 # In order to receive a message that is sent as a bytes-like-object you must decode into utf-8 (default)
 print(response.decode())
 s.close()
-
-
-
-
-
-
-===================================================[IP RAW SOCKET]========================================================
-
+```
+## IP Raw Socket
+```
 #!/usr/bin/python3
 # For building the socket
 import socket
@@ -121,13 +111,9 @@ packet = ip_header + hidden_msg
 s.sendto(packet, (dst_ip, 0))
 # socket.send is a low-level method and basically just the C/syscall method send(3) / send(2). It can send less bytes than you requested, but returns the number of bytes sent.
 # socket.sendall is a high-level Python-only method that sends the entire buffer you pass or throws an exception. It does that by calling socket.send until everything has been sent or an error occurs.
-
-
-
-
-
-=========================================[TCP RAW SOCKET]=====================================================
-
+```
+## TCP Raw Socket
+```
 #!/usr/bin/python3
 # For building the socket
 import socket
@@ -288,10 +274,9 @@ s.sendto(packet, (dst_ip, 0))
 
 # socket.send is a low-level method and basically just the C/syscall method send(3) / send(2). It can send fewer bytes than you requested, but returns the number of bytes sent.
 #socket.sendall ﻿is a high-level Python-only method that sends the entire buffer you pass or throws an exception. It does that by calling socket.send ﻿ until everything has been sent or an error occurs.
-
-
-===================================== NetCat Script =============================
-
+```
+## NetCat Script
+```
 #!/bin/bash
 echo "Enter network address (e.g. 192.168.0): "
 read net
@@ -305,4 +290,4 @@ for ((i=$start; $i<=$end; i++))
 do
     nc -nvzw1 $net.$i $ports 2>&1 | grep -E 'succ|open'
 done
-
+```
